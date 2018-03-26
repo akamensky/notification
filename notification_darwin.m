@@ -10,9 +10,8 @@ void show_notification(char* title, char* content) {
     userNotification.informativeText = ns_content;
     userNotification.soundName = NSUserNotificationDefaultSoundName;
 
-    NSLog(@"test1");
-
     [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:userNotification];
 
-    NSLog(@"test2");
+    NSLog(@"%@", ns_title);
+    NSLog(@"%@", ns_content);
 }
