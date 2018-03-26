@@ -2,7 +2,7 @@ package notification
 
 /*
 #cgo darwin CFLAGS: -DDARWIN -x objective-c -fobjc-arc
-#cgo darwin LDFLAGS: -framework Cocoa
+#cgo darwin LDFLAGS: -framework Foundation
 #include "notification.h"
 */
 import "C"

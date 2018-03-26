@@ -1,17 +1,20 @@
+#import "notification_darwin.h"
 #import "notification.h"
-#import <Cocoa/Cocoa.h>
+
 
 void show_notification(char* title, char* content) {
     NSString* ns_title = [[NSString alloc] initWithCString:title encoding:NSUTF8StringEncoding];
     NSString* ns_content = [[NSString alloc] initWithCString:content encoding:NSUTF8StringEncoding];
 
-    NSUserNotification *userNotification = [[NSUserNotification alloc] init];
-    userNotification.title = ns_title;
-    userNotification.informativeText = ns_content;
-    userNotification.soundName = NSUserNotificationDefaultSoundName;
+    if (installNSBundleHook()) {
+        NSUserNotification *note = [[NSUserNotification alloc] init];
+        note.title = ns_title;
+        note.informativeText = ns_content;
+        note.soundName = NSUserNotificationDefaultSoundName;
 
-    [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:userNotification];
+        [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:note];
+    }
 
-    NSLog(@"%@", ns_title);
-    NSLog(@"%@", ns_content);
+    free(title);
+    free(content);
 }
