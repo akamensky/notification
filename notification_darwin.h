@@ -2,18 +2,18 @@
 #import <objc/runtime.h>
 
 
-#pragma mark - Swizzle NSBundle
+#pragma mark - NSBundle
 
 NSString *fakeBundleIdentifier = nil;
 
-@implementation NSBundle(swizle)
+@implementation NSBundle(notifier)
 
 // Overriding bundleIdentifier works, but overriding NSUserNotificationAlertStyle does not work.
 
 - (NSString *)__bundleIdentifier
 {
     if (self == [NSBundle mainBundle]) {
-        return fakeBundleIdentifier ? fakeBundleIdentifier : @"com.apple.finder";
+        return fakeBundleIdentifier ? fakeBundleIdentifier : @"com.example.Test";
     } else {
         return [self __bundleIdentifier];
     }
@@ -45,7 +45,12 @@ BOOL installNSBundleHook()
 
 - (void)userNotificationCenter:(NSUserNotificationCenter *)center didDeliverNotification:(NSUserNotification *)notification
 {
-    self.keepRunning = NO;
+    self.keepRunning = YES;
+}
+
+- (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification
+{
+    return YES;
 }
 
 @end

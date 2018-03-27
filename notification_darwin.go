@@ -7,6 +7,9 @@ package notification
 */
 import "C"
 
-func show(title, content string) {
-	C.show_notification(C.CString(title), C.CString(content))
+func show(title, content string, iconBytes *[]byte) {
+	cTitle := C.CString(title)
+	cContent := C.CString(content)
+
+	C.show_notification(cTitle, cContent, nil, 0)
 }
